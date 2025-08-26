@@ -8,35 +8,55 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Hollywood Theater Theme */
+    --background: 280 15% 8%;
+    --foreground: 45 85% 92%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 280 12% 12%;
+    --card-foreground: 45 85% 92%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 280 12% 12%;
+    --popover-foreground: 45 85% 92%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Golden Hollywood Primary */
+    --primary: 45 85% 65%;
+    --primary-foreground: 280 15% 8%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Deep Purple Secondary */
+    --secondary: 280 25% 20%;
+    --secondary-foreground: 45 85% 92%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted Theater Colors */
+    --muted: 280 10% 15%;
+    --muted-foreground: 45 25% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Crimson Accent */
+    --accent: 345 75% 45%;
+    --accent-foreground: 45 85% 92%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 45 85% 92%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 280 15% 20%;
+    --input: 280 12% 12%;
+    --ring: 45 85% 65%;
 
-    --radius: 0.5rem;
+    /* Hollywood Gradients */
+    --gradient-stage: linear-gradient(135deg, hsl(280, 25%, 20%), hsl(280, 15%, 8%));
+    --gradient-gold: linear-gradient(135deg, hsl(45, 85%, 65%), hsl(45, 90%, 75%));
+    --gradient-spotlight: radial-gradient(circle, hsl(45, 85%, 65% / 0.3), transparent 60%);
+    --gradient-curtain: linear-gradient(180deg, hsl(345, 75%, 25%), hsl(345, 75%, 45%));
+
+    /* Shadows & Effects */
+    --shadow-spotlight: 0 0 40px hsl(45, 85%, 65% / 0.4);
+    --shadow-stage: 0 20px 40px -15px hsl(280, 25%, 8% / 0.8);
+    --shadow-elegant: 0 10px 30px -10px hsl(280, 15%, 8% / 0.6);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spotlight: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +121,81 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  /* Hollywood Stage Button */
+  .stage-button {
+    @apply relative overflow-hidden rounded-full;
+    background: var(--gradient-gold);
+    box-shadow: var(--shadow-spotlight);
+    transition: var(--transition-spotlight);
+  }
+  
+  .stage-button:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-spotlight), var(--shadow-stage);
+  }
+  
+  .stage-button:active {
+    transform: scale(0.98);
+  }
+
+  /* Spotlight Animation */
+  .spotlight-glow {
+    position: relative;
+  }
+  
+  .spotlight-glow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: var(--gradient-spotlight);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: var(--transition-spotlight);
+  }
+  
+  .spotlight-glow:hover::before {
+    opacity: 1;
+    animation: spotlight-pulse 2s ease-in-out infinite;
+  }
+
+  /* Fame Counter */
+  .fame-counter {
+    background: var(--gradient-stage);
+    border: 2px solid hsl(var(--primary));
+    box-shadow: var(--shadow-elegant);
+  }
+
+  /* Upgrade Cards */
+  .upgrade-card {
+    background: var(--gradient-stage);
+    border: 1px solid hsl(var(--border));
+    transition: var(--transition-smooth);
+  }
+  
+  .upgrade-card:hover {
+    border-color: hsl(var(--primary));
+    box-shadow: var(--shadow-elegant);
+    transform: translateY(-2px);
+  }
+}
+
+@layer utilities {
+  .text-shadow-gold {
+    text-shadow: 0 2px 4px hsl(45 85% 65% / 0.5);
+  }
+  
+  .bg-curtain {
+    background: var(--gradient-curtain);
+  }
+  
+  .bg-stage {
+    background: var(--gradient-stage);
   }
 }
